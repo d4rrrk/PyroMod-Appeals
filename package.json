@@ -1,0 +1,40 @@
+{
+  "name": "pyrocord",
+  "version": "1.0.0",
+  "description": "Offical code for the Pyrocynical Fan Club Discord's PyroMod bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KingOKarma/PyroMod.git"
+  },
+  "author": "KingOKarma",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/KingOKarma/PyroMod/issues"
+  },
+  "homepage": "https://github.com/KingOKarma/PyroMod#readme",
+  "dependencies": {
+    "@discordjs/builders": "^1.6.5",
+    "@discordjs/rest": "^2.0.0",
+    "discord.js": "^14.12.1",
+    "dotenv": "^16.4.1",
+    "ffmpeg": "^0.0.4",
+    "fs": "^0.0.1-security",
+    "js-yaml": "^4.1.0",
+    "prism": "^1.0.0",
+    "sodium-native": "^4.0.6"
+  },
+  "devDependencies": {
+    "@discordjs/voice": "^0.16.1",
+    "@types/js-yaml": "^4.0.9",
+    "@types/ms": "^0.7.34",
+    "@types/node": "^18.19.14",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+}
