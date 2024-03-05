@@ -56,6 +56,12 @@ const acceptedChannelId = '1209271871439372378'; // ID of the "accepted" channel
 const rejectedChannelId = '1209271907220852767'; // ID of the "rejected" channel
 const voteChannelId = '1198735748233429202'; // "vote-on-appeals" channel id#
 
+function timestampCheck() {
+  const unixTimestamp = Math.floor(Date.now() / 1000); // unix timestamp
+  const timestampString = `<t:${unixTimestamp}:f>`; // format to long date short time
+  return timestampString
+}
+
 const COMMAND_startvote = async (interaction: ChatInputCommandInteraction) => {
   const link = `https://discord.com/channels/${interaction.guild?.id}/`; // ${channel id}/${message id}
   const channel = interaction.channel; // channel that the command was used in
@@ -105,7 +111,7 @@ const COMMAND_startvote = async (interaction: ChatInputCommandInteraction) => {
 
       // send the message to the vote thread
       const voteMessage = await voteChannel.send({
-        content: `<@&${staffRoleId}> Please vote on this appeal.\nLink to ticket: ${channelLink}`,
+        content: `<@&${staffRoleId}> Please vote on this appeal.\nVote started on ${timestampCheck()}\nLink to ticket: ${channelLink}`,
         embeds: [{
           description: embedDescriptions.join('\n\n'),
         }],
@@ -123,7 +129,7 @@ const COMMAND_startvote = async (interaction: ChatInputCommandInteraction) => {
       });
 
       await discussionThread.send({
-        content: `Please discuss this appeal.\n\nCreated by <@${interaction.user.id}>`,
+        content: `Please discuss this appeal.\n\nVote started on ${timestampCheck()}\nCreated by <@${interaction.user.id}>`,
         embeds: [{
           description: embedDescriptions.join('\n\n'),
         }],
@@ -178,11 +184,12 @@ const COMMAND_startvote = async (interaction: ChatInputCommandInteraction) => {
             if (!acceptedChannel) {
               console.error('Unable to find accepted appeals log channel.');
             } else if (acceptedChannel.isTextBased()) {
-              const embedContent = `# Appeal was accepted.\n\n${embedDescriptions.join('\n\n')}\nLink to original vote message: ${voteMessageLink}\nLink to original ticket: ${channelLink}`;
+              const embedContent = `# Appeal was accepted.\n\n${embedDescriptions.join('\n\n')}\nLink to original vote message: ${voteMessageLink}\nLink to original ticket: ${channelLink}\nVote finished on ${timestampCheck()}`;
               (acceptedChannel as TextChannel).send({
                 content: `<@&${staffRoleId}>`,
                 embeds: [{
-                  description: embedContent
+                  description: embedContent,
+                  color: 0x00ff00 // hex colour for green
                 }],
                 allowedMentions: {
                   roles: [staffRoleId]
@@ -197,11 +204,12 @@ const COMMAND_startvote = async (interaction: ChatInputCommandInteraction) => {
             if (!rejectedChannel) {
               console.error('Unable to find rejected appeals log channel.');
             } else if (rejectedChannel.isTextBased()) {
-              const embedContent = `# Appeal was rejected.\n\n${embedDescriptions.join('\n\n')}\nLink to original vote message: ${voteMessageLink}\nLink to original ticket: ${channelLink}`;
+              const embedContent = `# Appeal was rejected.\n\n${embedDescriptions.join('\n\n')}\nLink to original vote message: ${voteMessageLink}\nLink to original ticket: ${channelLink}\nVote finished on ${timestampCheck()}`;
               (rejectedChannel as TextChannel).send({
                 content: `<@&${staffRoleId}>`,
                 embeds: [{
-                  description: embedContent
+                  description: embedContent,
+                  color: 0xff0000 // hex colour for red
                 }],
                 allowedMentions: {
                   roles: [staffRoleId]
