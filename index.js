@@ -88,6 +88,11 @@ var staffRoleId = '1198735267503276153'; // "pyrocynical discord staff" role id
 var acceptedChannelId = '1209271871439372378'; // ID of the "accepted" channel
 var rejectedChannelId = '1209271907220852767'; // ID of the "rejected" channel
 var voteChannelId = '1198735748233429202'; // "vote-on-appeals" channel id#
+function timestampCheck() {
+    var unixTimestamp = Math.floor(Date.now() / 1000); // unix timestamp
+    var timestampString = "<t:".concat(unixTimestamp, ":f>"); // format to long date short time
+    return timestampString;
+}
 var COMMAND_startvote = function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
     var link, channel, channelLink, messages, embedDescriptions_1, voteChannel, voteMessage_1, discussionThread_1, voteMessageLink_1, error_1;
     var _a, _b, _c;
@@ -157,7 +162,7 @@ var COMMAND_startvote = function (interaction) { return __awaiter(void 0, void 0
             case 6:
                 _d.sent();
                 return [4 /*yield*/, voteChannel.send({
-                        content: "<@&".concat(staffRoleId, "> Please vote on this appeal.\nLink to ticket: ").concat(channelLink),
+                        content: "<@&".concat(staffRoleId, "> Please vote on this appeal.\nVote started on ").concat(timestampCheck(), "\nLink to ticket: ").concat(channelLink),
                         embeds: [{
                                 description: embedDescriptions_1.join('\n\n'),
                             }],
@@ -176,7 +181,7 @@ var COMMAND_startvote = function (interaction) { return __awaiter(void 0, void 0
             case 8:
                 discussionThread_1 = _d.sent();
                 return [4 /*yield*/, discussionThread_1.send({
-                        content: "Please discuss this appeal.\n\nCreated by <@".concat(interaction.user.id, ">"),
+                        content: "Please discuss this appeal.\n\nVote started on ".concat(timestampCheck(), "\nCreated by <@").concat(interaction.user.id, ">"),
                         embeds: [{
                                 description: embedDescriptions_1.join('\n\n'),
                             }],
@@ -239,11 +244,12 @@ var COMMAND_startvote = function (interaction) { return __awaiter(void 0, void 0
                                         console.error('Unable to find accepted appeals log channel.');
                                     }
                                     else if (acceptedChannel.isTextBased()) {
-                                        embedContent = "# Appeal was accepted.\n\n".concat(embedDescriptions_1.join('\n\n'), "\nLink to original vote message: ").concat(voteMessageLink_1, "\nLink to original ticket: ").concat(channelLink);
+                                        embedContent = "# Appeal was accepted.\n\n".concat(embedDescriptions_1.join('\n\n'), "\nLink to original vote message: ").concat(voteMessageLink_1, "\nLink to original ticket: ").concat(channelLink, "\nVote finished on ").concat(timestampCheck());
                                         acceptedChannel.send({
                                             content: "<@&".concat(staffRoleId, ">"),
                                             embeds: [{
-                                                    description: embedContent
+                                                    description: embedContent,
+                                                    color: 0x00ff00 // hex colour for green
                                                 }],
                                             allowedMentions: {
                                                 roles: [staffRoleId]
@@ -259,11 +265,12 @@ var COMMAND_startvote = function (interaction) { return __awaiter(void 0, void 0
                                         console.error('Unable to find rejected appeals log channel.');
                                     }
                                     else if (rejectedChannel.isTextBased()) {
-                                        embedContent = "# Appeal was rejected.\n\n".concat(embedDescriptions_1.join('\n\n'), "\nLink to original vote message: ").concat(voteMessageLink_1, "\nLink to original ticket: ").concat(channelLink);
+                                        embedContent = "# Appeal was rejected.\n\n".concat(embedDescriptions_1.join('\n\n'), "\nLink to original vote message: ").concat(voteMessageLink_1, "\nLink to original ticket: ").concat(channelLink, "\nVote finished on ").concat(timestampCheck());
                                         rejectedChannel.send({
                                             content: "<@&".concat(staffRoleId, ">"),
                                             embeds: [{
-                                                    description: embedContent
+                                                    description: embedContent,
+                                                    color: 0xff0000 // hex colour for red
                                                 }],
                                             allowedMentions: {
                                                 roles: [staffRoleId]
