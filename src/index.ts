@@ -92,7 +92,15 @@ const COMMAND_startvote = async (interaction: ChatInputCommandInteraction) => {
                 content: `Loading...`,
                 ephemeral: true
               });
-            }
+            } else if (index === 0) {
+              
+            } else
+
+            interaction.reply({
+              content: `I was unable to find Ticket Tool's message.`,
+              ephemeral: true
+            });
+            return
           }));
         }
       }));
